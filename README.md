@@ -1,2 +1,196 @@
-# Game_Theory
-bargaining game for fair distribution of computational resources
+# Bargaining-Based Computational Resource Allocation Simulator
+
+A Python-based simulation of fair computational resource allocation using **Nash bargaining game theory**. The project models multiple users competing for limited computing resources and compares bargaining-based allocation against conventional allocation strategies.
+
+## Overview
+
+Computational resources such as CPU time, GPU capacity, memory, and cloud computing instances are often limited. When multiple users compete for these resources, a resource allocation mechanism must balance individual requirements, overall utility, fairness, and resource utilization.
+
+This project implements a centralized simulation that applies the Nash bargaining solution to a single divisible computational resource. It compares the resulting allocation with equal-sharing and demand-proportional baselines.
+
+## Objectives
+
+- Model multiple users competing for limited computational resources.
+- Implement Nash bargaining-based resource allocation.
+- Compare bargaining-based allocation with conventional allocation strategies.
+- Evaluate utility, demand-satisfaction fairness, and resource utilization.
+- Visualize and export experimental results.
+- Validate allocation constraints through automated tests.
+
+## Features
+
+- **Nash bargaining optimizer:** Maximizes the product of users' utility gains over their disagreement utilities.
+- **Equal-sharing baseline:** Distributes resources equally while respecting individual demand limits.
+- **Demand-proportional baseline:** Allocates resources in proportion to requested demand.
+- **Utility modeling:** Uses a logarithmic utility function with diminishing returns.
+- **Performance evaluation:** Measures aggregate utility, fairness, and resource utilization.
+- **Visualization:** Generates comparative charts using Matplotlib.
+- **CSV exports:** Saves user-level allocations and strategy-level evaluation metrics.
+- **Automated tests:** Checks allocation feasibility and selected edge cases.
+
+## Technology Stack
+
+- Python 3
+- NumPy
+- SciPy
+- Matplotlib
+- pytest
+
+## Project Structure
+
+```text
+resource-bargaining-simulator/
+├── main.py
+├── config.py
+├── requirements.txt
+├── models/
+│   ├── __init__.py
+│   └── resource_model.py
+├── algorithms/
+│   ├── __init__.py
+│   ├── nash_bargaining.py
+│   └── baseline.py
+├── evaluation/
+│   ├── __init__.py
+│   └── metrics.py
+├── visualization/
+│   ├── __init__.py
+│   └── plots.py
+├── tests/
+│   └── test_allocation.py
+└── results/
+```
+
+## Mathematical Model
+
+Let \(x_i\) represent the resource allocation to user \(i\), \(C\) the total available capacity, and \(d_i\) the maximum demand of user \(i\).
+
+The allocation must satisfy:
+
+\[
+0 \leq x_i \leq d_i
+\]
+
+\[
+\sum_{i=1}^{n} x_i \leq C
+\]
+
+The utility function is:
+
+\[
+u_i(x_i) = w_i \ln(1+x_i)
+\]
+
+where \(w_i\) is the user's utility weight.
+
+The Nash bargaining objective is:
+
+\[
+\max_{\mathbf{x}}
+\prod_{i=1}^{n}
+\left[u_i(x_i)-u_i^0\right]
+\]
+
+where \(u_i^0\) is the disagreement utility of user \(i\).
+
+For numerical stability, the implementation maximizes the logarithm of this product, subject to the resource and utility constraints.
+
+## Evaluation Metrics
+
+| Metric | Purpose |
+|---|---|
+| Total utility | Measures aggregate user utility |
+| Individual utility | Measures each user's benefit |
+| Demand-satisfaction fairness | Measures equality in the fraction of demand fulfilled |
+| Allocation fairness | Measures equality in raw resource allocation |
+| Resource utilization | Measures the proportion of capacity allocated |
+| Nash product | Measures the product of utility gains over disagreement utilities |
+
+Fairness and efficiency are distinct objectives. The Nash bargaining solution optimizes its defined bargaining objective; it is not guaranteed to maximize every evaluation metric.
+
+## Installation
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/shubhangi-111/Game_Theory.git
+
+cd Game_Theory
+```
+
+### 2. Create a virtual environment
+
+```bash
+python -m venv .venv
+```
+
+Activate it on Windows PowerShell:
+
+```powershell
+.venv\Scripts\Activate.ps1
+```
+
+On Linux:
+
+```bash
+source .venv/bin/activate
+```
+
+### 3. Install dependencies
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+## Usage
+
+Run the simulation:
+
+```bash
+python main.py
+```
+
+The default scenario is configured in `config.py`. You can modify resource capacity, user demands, utility weights, and disagreement utilities to experiment with different allocation scenarios.
+
+## Output
+
+The program generates the following files in the `results/` directory:
+
+- `allocation_comparison.png` — compares resource allocations across strategies.
+- `metrics_comparison.png` — compares utility, fairness, and resource utilization.
+- `user_allocations.csv` — records allocations, utilities, and demand-satisfaction ratios for each user.
+- `strategy_metrics.csv` — records aggregate evaluation metrics for each strategy.
+
+These results are generated by the simulation and should be inspected before being used in a report or presentation.
+
+## Testing
+
+Run the automated test suite:
+
+```bash
+python -m pytest -v
+```
+
+The tests cover baseline feasibility, symmetric allocation, abundant capacity, zero-capacity handling, zero-demand users, invalid disagreement utilities, and constraint violations.
+
+## Assumptions and Limitations
+
+- The simulator models one divisible resource type.
+- Resource allocation is centralized rather than distributed across real machines.
+- Utility weights and user demands are illustrative inputs.
+- The implementation does not interact with an actual cloud provider or operating-system scheduler.
+- Numerical optimization can fail for some inputs and must be validated.
+- The initial implementation does not model communication delays, strategic misreporting, or changing workloads over time.
+
+## Future Enhancements
+
+- Extend the model to multiple resource types, such as CPU, RAM, and GPU capacity.
+- Add workload arrival and completion events.
+- Compare different utility functions and bargaining weights.
+- Introduce dynamic resource reallocation.
+- Develop an interactive interface for changing scenario parameters.
+
+
+## License
+
+Choose and add an appropriate open-source license if you intend to distribute or reuse this project publicly.

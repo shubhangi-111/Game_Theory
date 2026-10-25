@@ -1,0 +1,10 @@
+User,Strategy,Demand,Allocation,Utility,Demand_Satisfaction_Ratio
+AI Research,Equal Sharing,8.0,3.333333,2.199506,0.416667
+Data Analytics,Equal Sharing,6.0,3.333333,1.466337,0.555556
+Student Project,Equal Sharing,5.0,3.333333,1.759604,0.666667
+AI Research,Demand Proportional,8.0,4.210526,2.476021,0.526316
+Data Analytics,Demand Proportional,6.0,3.157895,1.425009,0.526316
+Student Project,Demand Proportional,5.0,2.631579,1.547601,0.526316
+AI Research,Nash Bargaining,8.0,3.333334,2.199506,0.416667
+Data Analytics,Nash Bargaining,6.0,3.333335,1.466337,0.555556
+Student Project,Nash Bargaining,5.0,3.333331,1.759604,0.666666
